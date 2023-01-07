@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "portfolioahb"
+  },
+  "targets": {
+    "portfolioahb": {
+      "hosting": {
+        "portfolio": [
+          "portfolioahb"
+        ]
+      }
+    }
+  }
+}

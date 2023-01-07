@@ -91,8 +91,21 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "portfolio:build:production",
+            "firebaseProject": "portfolioahb",
+            "firebaseHostingSite": "portfolioahb"
+          }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "ee5c5e37-0e42-4c1d-b192-7659ca29869b"
   }
 }
