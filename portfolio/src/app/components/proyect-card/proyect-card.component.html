@@ -1,0 +1,18 @@
+<div class="componentCardList">
+<div class="componentCard" *ngFor="let proyect of proyects">
+	<div class="url">URL del proyecto: {{proyect.url}}</div>
+	<div class="nombre">Nombre del proyecto: {{proyect.name}}</div>
+	<picture>
+		<img src="{{proyect.picture}}" style="width: 400px;">
+	</picture>
+	<div class="languages">Idiomas:</div>
+	<div class="languagesList" *ngFor="let language of proyect.languages">
+	<div class="language">{{language}}</div>
+	</div>
+
+
+</div>	
+
+
+
+</div>
