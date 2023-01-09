@@ -1,27 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { Proyect } from '../../models/Proyect'
+import { Component, Input, OnInit } from '@angular/core';
+import { Proyect } from '../../models/Proyect';
+import { PexelsService } from 'src/app/services/pexels.service';
 @Component({
   selector: 'app-proyect-card',
   templateUrl: './proyect-card.component.html',
-  styleUrls: ['./proyect-card.component.css']
+  styleUrls: ['./proyect-card.component.css'],
 })
-export class ProyectCardComponent implements OnInit{
+export class ProyectCardComponent implements OnInit {
+  @Input() proyect: any;
+  picture: any;
+  constructor(private pexelsService: PexelsService) {}
 
-proyects:Proyect[]; 
-
-
-constructor(){}
-
-ngOnInit(): void {
-	this.proyects = [{
-		url: 'https://github.com/alvaroherbon/Brains',
-		name: 'Obsidian Brain',
-	        picture: "https://images.freeimages.com/images/large-previews/9c4/shiny-brain-1150907.jpg",	
-		languages: ["Natural Language", "SQL"]
-	}]
-	
-}
-	
-
-
+  ngOnInit(): void {
+    this.pexelsService.getPicture(this.proyect.language).subscribe((data) => {
+      console.log('la imagen es: ', data.photos[0].src.large);
+      this.picture = data.photos[0].src.large;
+    });
+  }
 }

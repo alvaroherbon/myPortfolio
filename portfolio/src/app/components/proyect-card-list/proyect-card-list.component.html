@@ -1,0 +1,8 @@
+<div class="container-fluid text-center mt-4">
+    <h3> These are my current Github Proyects: </h3>
+    <div class="row row-cols-auto m-2">
+        <div class="col" *ngFor="let proyect of proyects">
+            <app-proyect-card [proyect]="proyect"></app-proyect-card>
+        </div>
+    </div>
+</div>
