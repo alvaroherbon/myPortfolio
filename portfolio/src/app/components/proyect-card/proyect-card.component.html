@@ -1,16 +1,11 @@
-<div class="card mt-2" style="max-width: 540px">
-	<div class="row g-0">
-		<div class="col-md-4">
-			<img src="{{picture}}" class="img-fluid rounded-start" alt="Imagen repositorio">
-		</div>
-		<div class="col-md-8">
-			<div class="card-body">
-				<h5 class="card-title">{{proyect.name}}</h5>
-				<h6 class="card-subtitle mb-2 text-muted">{{proyect.language}}</h6>
-				<p class="card-text">{{proyect.description}}</p>
-				<a href="{{proyect.html_url}}" class="btn btn-primary">Más información</a>
-			</div>
+<div class="card h-100">
+	<img src="{{proyect.owner.avatar_url}}" class="card-img-top" alt="Imagen repositorio">
+	<div class="card-body">
+		<div class="card-body">
+			<h5 class="card-title">{{proyect.name}}</h5>
+			<h6 class="card-subtitle mb-2 text-muted">{{proyect.language}}</h6>
+			<p class="card-text">{{proyect.description}}</p>
+			<a href="{{proyect.html_url}}" class="btn btn-primary">More information</a>
 		</div>
 	</div>
-
 </div>

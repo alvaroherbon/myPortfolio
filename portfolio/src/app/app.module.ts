@@ -16,6 +16,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ProyectsComponent } from './components/proyects/proyects.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProyectDetailComponent } from './components/proyect-detail/proyect-detail.component';
+import { NewsCardComponent } from './components/news-card/news-card.component';
+import { NewsCardListComponent } from './components/news-card-list/news-card-list.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { ProyectDetailComponent } from './components/proyect-detail/proyect-deta
     ProyectsComponent,
     HomeComponent,
     ProyectDetailComponent,
+    NewsCardComponent,
+    NewsCardListComponent,
   ],
   imports: [
     BrowserModule,
