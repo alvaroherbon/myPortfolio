@@ -3,3 +3,7 @@
   height: 15vw;
   object-fit: cover;
 }
+
+#card :hover {
+  background-color: rgb(231, 226, 226);
+}
