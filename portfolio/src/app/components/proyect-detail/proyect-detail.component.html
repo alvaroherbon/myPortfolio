@@ -1,1 +1,18 @@
-<p>proyect-detail works!</p>
+<div class="container m-3 d-flex flex-row">
+    <div class="col">
+        <div class="container">
+            <h1>{{proyectName}}</h1>
+            <h2>Commits</h2>
+        </div>
+        <div class="container-fluid justify">
+
+            <div class="container" *ngFor="let commit of commits">
+                <h5>{{commit.commit.author.date}}
+                    {{commit.commit.author.name}}
+                </h5>
+                <h6 class="text-secondary">{{commit.commit.message}}
+                </h6>
+            </div>
+        </div>
+    </div>
+</div>

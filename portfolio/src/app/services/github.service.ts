@@ -13,4 +13,10 @@ export class GithubService {
       'https://api.github.com/users/alvaroherbon/repos'
     );
   }
+
+  getCommits(name: String): Observable<any> {
+    return this.http.get<any>(
+      `https://api.github.com/repos/alvaroherbon/${name}/commits`
+    );
+  }
 }

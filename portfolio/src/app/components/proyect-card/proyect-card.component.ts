@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Proyect } from '../../models/Proyect';
 import { PexelsService } from 'src/app/services/pexels.service';
+import { AppRoutingModule } from 'src/app/app-routing.module';
 @Component({
   selector: 'app-proyect-card',
   templateUrl: './proyect-card.component.html',
@@ -9,6 +10,7 @@ import { PexelsService } from 'src/app/services/pexels.service';
 export class ProyectCardComponent implements OnInit {
   @Input() proyect: any;
   picture: any;
+  router: AppRoutingModule;
   constructor(private pexelsService: PexelsService) {}
 
   ngOnInit(): void {
