@@ -1,17 +1,34 @@
-<div class="container m-3 d-flex flex-row">
-    <div class="col">
-        <div class="container">
-            <h1>{{proyectName}}</h1>
-            <h2>Commits</h2>
+<div class="container">
+    <div class="row ">
+        <div class="col-12">
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h1>{{proyect.name}}</h1>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{proyect.description}}</p>
+                    <p class="card-text fw-bold">Language: {{proyect.languages}}</p>
+                </div>
+            </div>
         </div>
-        <div class="container-fluid justify">
-
-            <div class="container" *ngFor="let commit of commits">
+    </div>
+    <div class="row mt-4">
+        <div class="col-5">
+            <h2>Log Commits</h2>
+            <div *ngFor="let commit of commits">
                 <h5>{{commit.commit.author.date}}
                     {{commit.commit.author.name}}
                 </h5>
                 <h6 class="text-secondary">{{commit.commit.message}}
                 </h6>
+            </div>
+        </div>
+        <div class="col-7 text-center">
+            <div class="card">
+                <h2 class="card-header">More information</h2>
+                <div class="card-body">
+                    <a href="{{proyect.url}}" class="btn btn-primary">Go to repository</a>
+                </div>
             </div>
         </div>
     </div>

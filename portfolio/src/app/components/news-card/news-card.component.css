@@ -4,6 +4,10 @@
   object-fit: cover;
 }
 
-#card :hover {
+/* #card :hover {
   background-color: rgb(231, 226, 226);
+} */
+
+.btn:hover {
+  transform: scale(1.05, 1.05);
 }
