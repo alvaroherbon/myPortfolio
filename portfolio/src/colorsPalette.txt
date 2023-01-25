@@ -1,6 +1,4 @@
-
---hunter-green: #2f4b26ff;
---sea-green: #3e885bff;
---eton-blue: #85bda6ff;
---baby-blue-eyes: #bedcfeff;
---cambridge-blue: #c0d7bbff;
+#82AAE3
+#91D8E4
+#BFEAF5
+#EAFDFC
