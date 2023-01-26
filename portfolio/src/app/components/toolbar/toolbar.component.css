@@ -24,3 +24,25 @@
 .navbar .navbar-nav .nav-item {
   position: relative;
 }
+
+.dropdown-item {
+  background-color: transparent !important;
+}
+.dropdown-item:hover {
+  font-weight: 550;
+}
+
+.dropdown-menu {
+  background-color: #edf0dd;
+}
+
+#navBarTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.vl {
+  border-left: 2px solid #579bb1;
+  height: 30px;
+  margin-right: 10px;
+}
