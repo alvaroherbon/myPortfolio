@@ -19,6 +19,9 @@ import { HomeComponent } from './components/home/home.component';
 import { ProyectDetailComponent } from './components/proyect-detail/proyect-detail.component';
 import { NewsCardComponent } from './components/news-card/news-card.component';
 import { NewsCardListComponent } from './components/news-card-list/news-card-list.component';
+import { FrontendComponent } from './components/frontend/frontend.component';
+import { FrontendListComponent } from './components/frontend-list/frontend-list.component';
+import { FacebookComponent } from './components/frontendProyects/facebook/facebook.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,9 @@ import { NewsCardListComponent } from './components/news-card-list/news-card-lis
     ProyectDetailComponent,
     NewsCardComponent,
     NewsCardListComponent,
+    FrontendComponent,
+    FrontendListComponent,
+    FacebookComponent,
   ],
   imports: [
     BrowserModule,
