@@ -22,6 +22,10 @@ import { NewsCardListComponent } from './components/news-card-list/news-card-lis
 import { FrontendComponent } from './components/frontend/frontend.component';
 import { FrontendListComponent } from './components/frontend-list/frontend-list.component';
 import { FacebookComponent } from './components/frontendProyects/facebook/facebook.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { LibraryComponent } from './components/backendProyects/library/library.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +42,7 @@ import { FacebookComponent } from './components/frontendProyects/facebook/facebo
     FrontendComponent,
     FrontendListComponent,
     FacebookComponent,
+    LibraryComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +54,8 @@ import { FacebookComponent } from './components/frontendProyects/facebook/facebo
     MatToolbarModule,
     MatIconModule,
     FormsModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
   ],
   providers: [],
   bootstrap: [AppComponent],
