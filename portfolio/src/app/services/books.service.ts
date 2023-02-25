@@ -10,7 +10,7 @@ import {
   updateDoc,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import Book from '../models/book';
+import Book from '../models/Book';
 
 @Injectable({
   providedIn: 'root',

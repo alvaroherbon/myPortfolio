@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import Book from 'src/app/models/book';
+import Book from 'src/app/models/Book';
 import { BooksService } from 'src/app/services/books.service';
 
 @Component({
@@ -14,12 +14,16 @@ export class LibraryComponent implements OnInit {
   books: Book[];
   constructor(private booksService: BooksService) {
     this.booksForm = new FormGroup({
-      title: new FormControl(''),
-      author: new FormControl(''),
-      description: new FormControl(''),
+      title: new FormControl('', Validators.required),
+      author: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
       mark: new FormControl(''),
       cover_url: new FormControl(''),
     });
+  }
+
+  get title() {
+    return this.booksForm.get('title');
   }
 
   ngOnInit(): void {
