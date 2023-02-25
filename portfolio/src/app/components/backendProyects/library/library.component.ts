@@ -26,7 +26,7 @@ export class LibraryComponent implements OnInit {
     this.refreshList();
   }
 
-  async submit() {
+  async addBook() {
     const response = this.booksService.addBook(this.booksForm.value);
     console.log(response);
   }
@@ -35,5 +35,20 @@ export class LibraryComponent implements OnInit {
     this.booksService.getBooks().subscribe((books) => {
       this.books = books;
     });
+  }
+
+  deleteBook(id: string | undefined) {
+    this.booksService.deleteBook(id).then(() => {
+      this.refreshList();
+    });
+  }
+
+  editBook(id: string | undefined) {
+    this.booksService.updateBook(id, this.booksForm.value);
+    this.refreshList();
+  }
+
+  viewBook(id: string | undefined) {
+    const book = this.books.find((book) => book.id === id);
   }
 }

@@ -28,6 +28,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { LibraryComponent } from './components/backendProyects/library/library.component';
 import { BackendComponent } from './components/backend/backend.component';
 import { BackendListComponent } from './components/backend-list/backend-list.component';
+import { BookDetailComponent } from './components/book-detail/book-detail.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { BackendListComponent } from './components/backend-list/backend-list.com
     LibraryComponent,
     BackendComponent,
     BackendListComponent,
+    BookDetailComponent,
   ],
   imports: [
     BrowserModule,
