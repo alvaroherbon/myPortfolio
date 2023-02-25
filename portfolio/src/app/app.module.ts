@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,10 +22,12 @@ import { NewsCardListComponent } from './components/news-card-list/news-card-lis
 import { FrontendComponent } from './components/frontend/frontend.component';
 import { FrontendListComponent } from './components/frontend-list/frontend-list.component';
 import { FacebookComponent } from './components/frontendProyects/facebook/facebook.component';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { LibraryComponent } from './components/backendProyects/library/library.component';
+import { BackendComponent } from './components/backend/backend.component';
+import { BackendListComponent } from './components/backend-list/backend-list.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { LibraryComponent } from './components/backendProyects/library/library.c
     FrontendListComponent,
     FacebookComponent,
     LibraryComponent,
+    BackendComponent,
+    BackendListComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +58,7 @@ import { LibraryComponent } from './components/backendProyects/library/library.c
     MatToolbarModule,
     MatIconModule,
     FormsModule,
+    ReactiveFormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
   ],

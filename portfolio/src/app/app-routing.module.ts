@@ -6,6 +6,8 @@ import { ProyectDetailComponent } from './components/proyect-detail/proyect-deta
 import { ProyectsComponent } from './components/proyects/proyects.component';
 import { FrontendComponent } from './components/frontend/frontend.component';
 import { FacebookComponent } from './components/frontendProyects/facebook/facebook.component';
+import { BackendComponent } from './components/backend/backend.component';
+import { LibraryComponent } from './components/backendProyects/library/library.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -14,6 +16,8 @@ const routes: Routes = [
   { path: 'githubProyects', component: ProyectsComponent },
   { path: 'githubProyects/:name', component: ProyectDetailComponent },
   { path: 'frontend', component: FrontendComponent },
+  { path: 'backend', component: BackendComponent },
+  { path: 'backend/library', component: LibraryComponent },
   { path: 'frontend/facebook', component: FacebookComponent },
 ];
 
