@@ -1,1 +1,22 @@
-<
+<div class="container-fluid">
+    <a href="backend/library">
+        <i class="bi bi-arrow-left" style="font-size: 40px"></i>
+    </a>
+    <div class="d-flex flex-row">
+        <div class="d-flex flex-column col-3 align-items-center">
+            <img class="mt-2 rounded" src="{{book.cover_url}}">
+            <div>
+                <button type="button" class="btn btn-primary m-2">
+                    <a style="color: white; text-decoration: none;" href="{{book.book_url}}">More Info</a>
+                </button>
+            </div>
+        </div>
+        <div class="col">
+            <h1>{{book.title}}</h1>
+            <h3 class="text-secondary">{{book.author}}</h3>
+            <p>Description: {{book.description}}</p>
+            <p>Mark : {{book.mark}}</p>
+
+        </div>
+    </div>
+</div>

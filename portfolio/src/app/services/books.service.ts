@@ -9,6 +9,7 @@ import {
   doc,
   deleteDoc,
   updateDoc,
+  docData,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import Book from '../models/Book';
@@ -17,9 +18,9 @@ import Book from '../models/Book';
   providedIn: 'root',
 })
 export class BooksService {
-  getBook(id: string) {
+  getBook(id: any): Observable<Book> {
     const booksRef = collection(this.firestore, 'books');
-    return doc(booksRef, id);
+    return docData(doc(booksRef, id)) as Observable<Book>;
   }
   constructor(private firestore: Firestore, private http: HttpClient) {}
 
@@ -45,6 +46,7 @@ export class BooksService {
       description: book.description,
       mark: book.mark,
       cover_url: book.cover_url,
+      book_url: book.book_url,
     });
   }
 

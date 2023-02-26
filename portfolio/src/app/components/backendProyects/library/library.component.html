@@ -33,6 +33,12 @@
                 placeholder="https://...jpg/png" formControlName="cover_url">
         </div>
 
+        <label for="basic-url" class="form-label">Book url</label>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="book_url" aria-describedby="basic-addon3"
+                placeholder="https://...com" formControlName="book_url">
+        </div>
+
         <div class="input-group">
             <span class="input-group-text">Description</span>
             <textarea class="form-control" aria-label="With textarea" formControlName="description"></textarea>
@@ -66,7 +72,7 @@
             </thead>
             <tbody *ngFor="let book of books">
                 <tr>
-                    <td><img [src]="book.cover_url" [alt]="book.title" [width]="100"></td>
+                    <td><img class="rounded" [src]="book.cover_url" [alt]="book.title" [width]="100"></td>
                     <td>{{book.title}}</td>
                     <td>{{book.author}}</td>
                     <td>{{book.mark}}</td>
@@ -75,8 +81,9 @@
                                 class="fa fa-trash"></i></button>
                         <button type="button" class="btn btn-warning m-2" (click)="editBook(book)"><i
                                 class="fa fa-pencil"></i></button>
-                        <button type="button" class="btn btn-success m-2" (click)="viewBook(book)"><i
-                                class="fa fa-eye"></i></button>
+                        <a href="backend/library/{{book.id}}"><button type="button" class="btn btn-success m-2"><i
+                                    class="fa fa-eye"></i></button>
+                        </a>
                     </td>
                 </tr>
             </tbody>
@@ -112,13 +119,21 @@
             </form>
         </div>
 
+        <div class="d-flex justify-content-center m-5" *ngIf="charging">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
         <div class="list-group" *ngFor="let book of searchBookList">
             <button type="button" class="list-group-item list-group-item-action" aria-current="true"
                 (click)="selectBook(book)">
-                <img [src]=book.cover_url [alt]="book.title" [width]="100">
+                <img class="rounded" [src]=book.cover_url [alt]="book.title" [width]="100">
                 {{book.title}} - {{book.author}}
             </button>
         </div>
+
+
 
     </ng-template>
 

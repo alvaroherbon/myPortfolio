@@ -17,6 +17,7 @@ export class LibraryComponent implements OnInit {
   books: Book[];
   editing: boolean = false;
   editBookId: string = '';
+  charging: boolean = false;
   constructor(
     private booksService: BooksService,
     private modalService: NgbModal
@@ -27,6 +28,7 @@ export class LibraryComponent implements OnInit {
       description: new FormControl('', Validators.required),
       mark: new FormControl(''),
       cover_url: new FormControl(''),
+      book_url: new FormControl(''),
     });
     this.searchBookForm = new FormGroup({
       bookToSearch: new FormControl(''),
@@ -35,6 +37,7 @@ export class LibraryComponent implements OnInit {
 
   async advancedSearch() {
     const title = this.searchBookForm.value.bookToSearch;
+    this.charging = true;
     const response = await this.booksService
       .searchBooksOnline(title)
       .subscribe((data) => {
@@ -48,17 +51,17 @@ export class LibraryComponent implements OnInit {
               cover_url: book.isbn
                 ? `https://covers.openlibrary.org/b/isbn/${book.isbn[0]}-M.jpg`
                 : '',
+              book_url: book.isbn
+                ? `https://openlibrary.org/isbn/${book.isbn[0]}`
+                : '',
             };
           }
         );
+        this.charging = false;
       });
   }
 
   async searchBook(title: string) {}
-
-  get title() {
-    return this.booksForm.get('title');
-  }
 
   ngOnInit(): void {
     this.refreshList();
@@ -84,6 +87,7 @@ export class LibraryComponent implements OnInit {
       description: book.description,
       mark: book.mark,
       cover_url: book.cover_url,
+      book_url: book.book_url,
     });
     this.addBook();
     this.modalService.dismissAll();
@@ -108,12 +112,11 @@ export class LibraryComponent implements OnInit {
       description: book.description,
       mark: book.mark,
       cover_url: book.cover_url,
+      book_url: book.book_url,
     });
     this.editing = true;
     this.editBookId = book.id;
   }
-
-  viewBook(book: Book) {}
 
   closeResult = '';
 

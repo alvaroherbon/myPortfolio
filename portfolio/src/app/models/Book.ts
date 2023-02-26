@@ -5,4 +5,5 @@ export default interface Book {
   description: string;
   mark: number;
   cover_url: string;
+  book_url: string;
 }

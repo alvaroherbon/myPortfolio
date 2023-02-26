@@ -8,6 +8,7 @@ import { FrontendComponent } from './components/frontend/frontend.component';
 import { FacebookComponent } from './components/frontendProyects/facebook/facebook.component';
 import { BackendComponent } from './components/backend/backend.component';
 import { LibraryComponent } from './components/backendProyects/library/library.component';
+import { BookDetailComponent } from './components/book-detail/book-detail.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'frontend', component: FrontendComponent },
   { path: 'backend', component: BackendComponent },
   { path: 'backend/library', component: LibraryComponent },
+  { path: 'backend/library/:id', component: BookDetailComponent },
   { path: 'frontend/facebook', component: FacebookComponent },
 ];
 

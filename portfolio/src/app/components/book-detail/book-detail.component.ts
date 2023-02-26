@@ -17,6 +17,9 @@ export class BookDetailComponent {
   ) {}
 
   ngOnInit(): void {
-    //this.book = this.bookService.getBook(this.route.snapshot.paramMap.get('id'));
+    const id = this.route.snapshot.paramMap.get('id');
+    this.bookService.getBook(id).subscribe((data) => {
+      this.book = data;
+    });
   }
 }
