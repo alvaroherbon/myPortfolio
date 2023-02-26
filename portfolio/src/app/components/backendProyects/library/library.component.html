@@ -38,9 +38,12 @@
             <textarea class="form-control" aria-label="With textarea" formControlName="description"></textarea>
         </div>
         <div class="d-flex justify-content-sm-between mt-3">
-            <button type="button" class="btn btn-secondary" (click)="advancedSearch()">Advanced
+            <button type="button" class="btn btn-secondary" (click)="open(content)">Advanced
                 Search</button>
-            <button type="submit" class="btn btn-primary">Add Book</button>
+            <button type="submit" class="btn btn-primary">
+                {{editing? 'Update Book' : 'Add Book'}}
+
+            </button>
 
         </div>
     </form>
@@ -68,11 +71,11 @@
                     <td>{{book.author}}</td>
                     <td>{{book.mark}}</td>
                     <td>
-                        <button type="button" class="btn btn-danger m-2" (click)="deleteBook(book.id)"><i
+                        <button type="button" class="btn btn-danger m-2" (click)="deleteBook(book)"><i
                                 class="fa fa-trash"></i></button>
-                        <button type="button" class="btn btn-warning m-2" (click)="editBook(book.id)"><i
+                        <button type="button" class="btn btn-warning m-2" (click)="editBook(book)"><i
                                 class="fa fa-pencil"></i></button>
-                        <button type="button" class="btn btn-success m-2" (click)="viewBook(book.id)"><i
+                        <button type="button" class="btn btn-success m-2" (click)="viewBook(book)"><i
                                 class="fa fa-eye"></i></button>
                     </td>
                 </tr>
@@ -82,29 +85,44 @@
 
     </div>
 
+    <ng-template #content let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">
+                Search a Book
+            </h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+
+                <span aria-hidden="true">
+                    X
+                </span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="searchBookForm">
+                <div class="form-group">
+                    <label for="dateOfBirth">
+                        Advanced Search
+                    </label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" formControlName="bookToSearch"
+                            placeholder="Book to search" aria-label="Book to search" aria-describedby="basic-addon1">
+                        <button type="button" class="btn btn-primary" (click)="advancedSearch()">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="list-group" *ngFor="let book of searchBookList">
+            <button type="button" class="list-group-item list-group-item-action" aria-current="true"
+                (click)="selectBook(book)">
+                <img [src]=book.cover_url [alt]="book.title" [width]="100">
+                {{book.title}} - {{book.author}}
+            </button>
+        </div>
+
+    </ng-template>
+
+
 
 
 </div>
-
-<script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function () {
-        'use strict'
-
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.querySelectorAll('.needs-validation')
-
-        // Loop over them and prevent submission
-        Array.prototype.slice.call(forms)
-            .forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-
-                    form.classList.add('was-validated')
-                }, false)
-            })
-    })()
-</script>

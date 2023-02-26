@@ -29,6 +29,7 @@ import { LibraryComponent } from './components/backendProyects/library/library.c
 import { BackendComponent } from './components/backend/backend.component';
 import { BackendListComponent } from './components/backend-list/backend-list.component';
 import { BookDetailComponent } from './components/book-detail/book-detail.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { BookDetailComponent } from './components/book-detail/book-detail.compon
     ReactiveFormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

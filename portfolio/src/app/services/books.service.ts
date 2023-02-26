@@ -33,9 +33,15 @@ export class BooksService {
     return deleteDoc(doc(booksRef, id));
   }
 
-  updateBook(id: string | undefined, book: Book) {
+  updateBook(id: string, book: Book) {
     const booksRef = collection(this.firestore, 'books');
-    //return updateDoc(doc(booksRef, id), book);
+    return updateDoc(doc(booksRef, id), {
+      title: book.title,
+      author: book.author,
+      description: book.description,
+      mark: book.mark,
+      cover_url: book.cover_url,
+    });
   }
 
   searchBooksOnline(name: String): Observable<any> {
