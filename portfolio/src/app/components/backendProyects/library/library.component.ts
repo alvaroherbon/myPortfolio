@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import Book from 'src/app/models/Book';
 import { BooksService } from 'src/app/services/books.service';
+//import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-library',
@@ -10,6 +11,9 @@ import { BooksService } from 'src/app/services/books.service';
   styleUrls: ['./library.component.css'],
 })
 export class LibraryComponent implements OnInit {
+  advancedSearch() {
+    throw new Error('Method not implemented.');
+  }
   booksForm: FormGroup;
   books: Book[];
   constructor(private booksService: BooksService) {

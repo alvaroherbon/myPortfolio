@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   Firestore,
@@ -16,7 +17,7 @@ import Book from '../models/Book';
   providedIn: 'root',
 })
 export class BooksService {
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore, private http: HttpClient) {}
 
   addBook(book: Book) {
     const booksRef = collection(this.firestore, 'books');
@@ -35,5 +36,9 @@ export class BooksService {
   updateBook(id: string | undefined, book: Book) {
     const booksRef = collection(this.firestore, 'books');
     //return updateDoc(doc(booksRef, id), book);
+  }
+
+  searchBooksOnline(name: String): Observable<any> {
+    return this.http.get<any>(`https://openlibrary.org/search.json?q=${name}`);
   }
 }
