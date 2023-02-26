@@ -17,6 +17,10 @@ import Book from '../models/Book';
   providedIn: 'root',
 })
 export class BooksService {
+  getBook(id: string) {
+    const booksRef = collection(this.firestore, 'books');
+    return doc(booksRef, id);
+  }
   constructor(private firestore: Firestore, private http: HttpClient) {}
 
   addBook(book: Book) {
