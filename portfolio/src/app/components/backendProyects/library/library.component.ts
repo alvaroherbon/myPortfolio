@@ -13,7 +13,9 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class LibraryComponent implements OnInit {
   searchBookList: Book[];
   searchBookForm: FormGroup;
+  searchBookFormLocal: FormGroup;
   booksForm: FormGroup;
+  filteredBooks: Book[] = [];
   books: Book[];
   editing: boolean = false;
   editBookId: string = '';
@@ -32,6 +34,9 @@ export class LibraryComponent implements OnInit {
     });
     this.searchBookForm = new FormGroup({
       bookToSearch: new FormControl(''),
+    });
+    this.searchBookFormLocal = new FormGroup({
+      searchBookLocal: new FormControl(''),
     });
   }
 
@@ -61,7 +66,15 @@ export class LibraryComponent implements OnInit {
       });
   }
 
-  async searchBook(title: string) {}
+  searchBook() {
+    if (this.searchBookFormLocal.value.searchBookLocal === '') {
+      this.filteredBooks = this.books;
+    }
+    const title = this.searchBookFormLocal.value.searchBookLocal;
+    this.filteredBooks = this.books.filter((book) => {
+      return book.title.toLowerCase().includes(title.toLowerCase());
+    });
+  }
 
   ngOnInit(): void {
     this.refreshList();
@@ -96,6 +109,7 @@ export class LibraryComponent implements OnInit {
   refreshList() {
     this.booksService.getBooks().subscribe((books) => {
       this.books = books;
+      this.filteredBooks = books;
     });
   }
 

@@ -55,10 +55,13 @@
     </form>
 
     <h2 class="mt-5">List of books</h2>
-    <div class="d-flex justify-content-start w-25 mt-3 mb-3">
-        <input type="text" class="form-control" placeholder="Search" aria-label="Search"
-            aria-describedby="basic-addon1">
-    </div>
+    <form [formGroup]=searchBookFormLocal>
+        <div class="d-flex justify-content-start w-25 mt-3 mb-3">
+            <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                aria-describedby="basic-addon1" formControlName="searchBookLocal" (input)="searchBook()">
+        </div>
+    </form>
+
     <div class="table-responsive">
         <table class="table table-hover table-light m-2">
             <thead class="thead-light">
@@ -70,7 +73,7 @@
                     <th scope="col" [width]="200">Actions</th>
                 </tr>
             </thead>
-            <tbody *ngFor="let book of books">
+            <tbody *ngFor="let book of filteredBooks">
                 <tr>
                     <td><img class="rounded" [src]="book.cover_url" [alt]="book.title" [width]="100"></td>
                     <td>{{book.title}}</td>
@@ -112,7 +115,8 @@
                     </label>
                     <div class="input-group">
                         <input type="text" class="form-control" formControlName="bookToSearch"
-                            placeholder="Book to search" aria-label="Book to search" aria-describedby="basic-addon1">
+                            placeholder="Book to search" aria-label="Book to search" aria-describedby="basic-addon1"
+                            (change)="advancedSearch()">
                         <button type="button" class="btn btn-primary" (click)="advancedSearch()">Search</button>
                     </div>
                 </div>
