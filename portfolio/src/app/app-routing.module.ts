@@ -9,6 +9,8 @@ import { FacebookComponent } from './components/frontendProyects/facebook/facebo
 import { BackendComponent } from './components/backend/backend.component';
 import { LibraryComponent } from './components/backendProyects/library/library.component';
 import { BookDetailComponent } from './components/book-detail/book-detail.component';
+import { RegisterPageComponent } from './components/register-page/register-page.component';
+import { ChatComponent } from './components/backendProyects/chat/chat.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,6 +23,8 @@ const routes: Routes = [
   { path: 'backend/library', component: LibraryComponent },
   { path: 'backend/library/:id', component: BookDetailComponent },
   { path: 'frontend/facebook', component: FacebookComponent },
+  { path: 'backend/register', component: RegisterPageComponent },
+  { path: 'backend/chat', component: ChatComponent },
 ];
 
 @NgModule({

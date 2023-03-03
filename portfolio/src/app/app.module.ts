@@ -30,6 +30,10 @@ import { BackendComponent } from './components/backend/backend.component';
 import { BackendListComponent } from './components/backend-list/backend-list.component';
 import { BookDetailComponent } from './components/book-detail/book-detail.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideDatabase, getDatabase } from '@angular/fire/database';
+import { RegisterPageComponent } from './components/register-page/register-page.component';
+import { ChatComponent } from './components/backendProyects/chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +54,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BackendComponent,
     BackendListComponent,
     BookDetailComponent,
+    RegisterPageComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +71,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     NgbModule,
+    provideAuth(() => getAuth()),
+    provideDatabase(() => getDatabase()),
   ],
   providers: [],
   bootstrap: [AppComponent],
