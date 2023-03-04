@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { UUID } from 'bson';
 import User from 'src/app/models/User';
+import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
@@ -12,7 +13,10 @@ import { ChatService } from 'src/app/services/chat.service';
 export class RegisterPageComponent implements OnInit {
   registerForm: FormGroup;
 
-  constructor(private chatService: ChatService) {
+  constructor(
+    private chatService: ChatService,
+    private authService: AuthService
+  ) {
     this.registerForm = new FormGroup({
       name: new FormControl(''),
       lastName: new FormControl(''),
@@ -23,6 +27,11 @@ export class RegisterPageComponent implements OnInit {
   ngOnInit() {}
 
   registerUser() {
+    this.authService.register(
+      this.registerForm.value.email,
+      this.registerForm.value.password
+    );
+
     const user: User = {
       id: new UUID().toString(),
       name: this.registerForm.value.name,

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
@@ -10,7 +11,10 @@ import { ChatService } from 'src/app/services/chat.service';
 export class LoginPageComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor(private chatService: ChatService) {
+  constructor(
+    private chatService: ChatService,
+    private authService: AuthService
+  ) {
     this.loginForm = new FormGroup({
       email: new FormControl(''),
       password: new FormControl(''),
@@ -18,5 +22,8 @@ export class LoginPageComponent implements OnInit {
   }
   ngOnInit(): void {}
 
-  loginUser() {}
+  loginUser() {
+    const { email, password } = this.loginForm.value;
+    this.authService.login(email, password);
+  }
 }
