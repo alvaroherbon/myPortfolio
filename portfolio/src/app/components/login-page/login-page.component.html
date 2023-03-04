@@ -1,0 +1,13 @@
+<div class="container ">
+    <h2>Log In</h2>
+    <form class="form-group m-2" [formGroup]="loginForm" (ngSubmit)="loginUser()" novalidate>
+
+        <input type="text" formControlName="email" class="form-control" placeholder="Email" aria-label="Email"
+            aria-describedby="basic-addon1" required>
+        <input type="password" formControlName="password" class="form-control mt-2" placeholder="password"
+            aria-label="password">
+
+        <button type="submit" class="btn btn-primary m-2">Log In</button>
+
+    </form>
+</div>

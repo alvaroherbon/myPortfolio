@@ -11,6 +11,7 @@ import { LibraryComponent } from './components/backendProyects/library/library.c
 import { BookDetailComponent } from './components/book-detail/book-detail.component';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { ChatComponent } from './components/backendProyects/chat/chat.component';
+import { LoginPageComponent } from './components/login-page/login-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'frontend/facebook', component: FacebookComponent },
   { path: 'backend/register', component: RegisterPageComponent },
   { path: 'backend/chat', component: ChatComponent },
+  { path: 'backend/login', component: LoginPageComponent },
 ];
 
 @NgModule({

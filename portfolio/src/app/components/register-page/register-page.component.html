@@ -1,9 +1,13 @@
-<div class="container">
-    <form class="needs-validation" [formGroup]="registerForm" (ngSubmit)="registerUser()" novalidate>
+<div class="container ">
+    <h2>Register</h2>
+    <form class="form-group m-2" [formGroup]="registerForm" (ngSubmit)="registerUser()" novalidate>
+
         <input type="text" formControlName="name" class="form-control" placeholder="Name" aria-label="Name"
             aria-describedby="basic-addon1" required>
-        <input type="text" formControlName="lastName" class="form-control" placeholder="Surname" aria-label="Surname">
-        <input type="text" formControlName="email" class="form-control" placeholder="Email" aria-label="Email">
-        <button type="submit" class="btn btn-primary">Register</button>
+
+        <input type="text" formControlName="lastName" class="form-control mt-2" placeholder="Last Name"
+            aria-label="Surname">
+        <input type="text" formControlName="email" class="form-control mt-2" placeholder="Email" aria-label="Email">
+        <button type="submit" class="btn btn-primary m-2">Register</button>
     </form>
 </div>

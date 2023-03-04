@@ -31,6 +31,4 @@ export class RegisterPageComponent implements OnInit {
     };
     this.chatService.registerUser(user);
   }
-
-  //TODO continue here
 }
