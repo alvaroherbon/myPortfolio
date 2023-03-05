@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { UUID } from 'bson';
 import User from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+import Message from 'src/app/models/Message';
 
 @Component({
   selector: 'app-register-page',
@@ -30,22 +31,51 @@ export class RegisterPageComponent implements OnInit {
   ngOnInit() {}
 
   async registerUser() {
-    this.authService.register(
-      this.registerForm.value.email,
-      this.registerForm.value.password
-    );
+    await this.authService
+      .register(this.registerForm.value.email, this.registerForm.value.password)
+      .then((res) => {
+        Swal.fire({
+          title: 'Welcome',
+          text: 'You have registered successfully',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+        });
+        const welcomeMessage: Message = {
+          timestamp: new Date().getTime(),
+          message: 'Welcome to the chat',
+          sender: 'admin',
+        };
 
-    const id = await this.authService.register(
-      this.registerForm.value.email,
-      this.registerForm.value.password
-    );
-    const user: User = {
-      id: id,
-      name: this.registerForm.value.name,
-      lastName: this.registerForm.value.lastName,
-      email: this.registerForm.value.email,
-    };
-    this.chatService.registerUser(user, id);
-    this.router.navigate(['/backend/login']);
+        const user: User = {
+          id: res.user.uid,
+          name: this.registerForm.value.name,
+          lastName: this.registerForm.value.lastName,
+          email: this.registerForm.value.email,
+          messages: [welcomeMessage],
+        };
+        this.chatService.registerUser(user, user.id);
+        this.router.navigateByUrl('/backend/login');
+      })
+      .catch((error) => {
+        if (error.code === 'auth/email-already-in-use') {
+          Swal.fire({
+            title: 'Error',
+            text: 'User already exists',
+            icon: 'error',
+            confirmButtonText: 'Ok',
+          });
+        } else if (error.code === 'auth/invalid-email') {
+          Swal.fire({
+            title: 'Error',
+            text: 'Invalid email',
+            icon: 'error',
+            confirmButtonText: 'Ok',
+          });
+        }
+      });
+  }
+
+  goToLogin() {
+    this.router.navigateByUrl('/backend/login');
   }
 }

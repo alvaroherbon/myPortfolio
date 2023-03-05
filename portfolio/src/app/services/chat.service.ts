@@ -9,6 +9,11 @@ export class ChatService {
   constructor(private database: Database) {}
 
   registerUser(user: User, id: String | null) {
-    set(ref(this.database, 'users/' + user.name + ' - ' + id), user);
+    set(ref(this.database, 'users/' + id), user);
+  }
+
+  getUserByName(name: string, id: String | null) {
+    const res = ref(this.database, 'users/' + id);
+    return res;
   }
 }

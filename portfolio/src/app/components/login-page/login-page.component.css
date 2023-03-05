@@ -1,8 +1,24 @@
 .container {
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 50vh;
-  width: 50vw;
+  width: 30vw;
+  border: solid;
+  border-color: gray;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  background-image: linear-gradient(to right top, #c4c1b9, #9d9a94);
+  border-radius: 20px;
+}
+a {
+  color: white;
+}
+a:hover {
+  color: blue;
+}
+
+h1 {
+  color: white;
 }

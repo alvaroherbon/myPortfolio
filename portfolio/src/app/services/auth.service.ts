@@ -5,37 +5,25 @@ import {
   createUserWithEmailAndPassword,
 } from '@angular/fire/auth';
 import User from '../models/User';
+import { ChatService } from './chat.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private auth: Auth) {}
+  constructor(private auth: Auth, private chatService: ChatService) {}
 
   getUser() {
-    return this.auth.currentUser;
+    const name: any = this.auth.currentUser?.email;
+    const id: any = this.auth.currentUser?.uid;
+    console.log('current user is ', this.auth.currentUser);
+    return this.chatService.getUserByName(name, id);
   }
 
   async register(email: string, password: string) {
-    try {
-      const result = await createUserWithEmailAndPassword(
-        this.auth,
-        email,
-        password
-      ).then((result) => {
-        return result.user.uid;
-      });
-
-      return result;
-    } catch (error) {
-      return null;
-    }
+    return await createUserWithEmailAndPassword(this.auth, email, password);
   }
-  login(email: string, password: string) {
-    try {
-      signInWithEmailAndPassword(this.auth, email, password);
-    } catch (error) {
-      console.log('Error: ', error);
-    }
+  async login(email: string, password: string) {
+    return await signInWithEmailAndPassword(this.auth, email, password);
   }
 }

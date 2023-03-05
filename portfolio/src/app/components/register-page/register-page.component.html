@@ -1,5 +1,5 @@
 <div class="container ">
-    <h2>Register</h2>
+    <h1>Register</h1>
     <form class="form-group m-2" [formGroup]="registerForm" (ngSubmit)="registerUser()" novalidate>
 
         <input type="text" formControlName="name" class="form-control" placeholder="Name" aria-label="Name"
@@ -11,6 +11,7 @@
         <input type="password" formControlName="password" class="form-control mt-2" placeholder="password"
             aria-label="password">
         <div class="d-flex flex-row justify-content-center">
+            <button type="button" class="btn btn-secondary m-2" (click)="goToLogin()">Cancel</button>
             <button type="submit" class="btn btn-primary m-2">Register</button>
         </div>
     </form>

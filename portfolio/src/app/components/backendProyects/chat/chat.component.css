@@ -1,0 +1,12 @@
+#contactsPannel {
+  background-color: gray;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+}
+#chatPannel {
+  background-color: blue;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+}
