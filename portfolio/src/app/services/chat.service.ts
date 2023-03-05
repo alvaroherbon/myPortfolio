@@ -8,8 +8,7 @@ import User from '../models/User';
 export class ChatService {
   constructor(private database: Database) {}
 
-  registerUser(user: User) {
-    set(ref(this.database, 'users/' + user.name + ' - ' + user.id), user);
-    console.log('user created successfully');
+  registerUser(user: User, id: String | null) {
+    set(ref(this.database, 'users/' + user.name + ' - ' + id), user);
   }
 }

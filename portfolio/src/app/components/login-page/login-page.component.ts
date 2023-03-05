@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -13,7 +14,8 @@ export class LoginPageComponent implements OnInit {
 
   constructor(
     private chatService: ChatService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     this.loginForm = new FormGroup({
       email: new FormControl(''),
@@ -25,5 +27,6 @@ export class LoginPageComponent implements OnInit {
   loginUser() {
     const { email, password } = this.loginForm.value;
     this.authService.login(email, password);
+    this.router.navigate(['/backend/chat']);
   }
 }

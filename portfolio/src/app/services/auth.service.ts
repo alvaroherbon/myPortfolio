@@ -12,24 +12,30 @@ import User from '../models/User';
 export class AuthService {
   constructor(private auth: Auth) {}
 
-  register(email: string, password: string) {
-    createUserWithEmailAndPassword(this.auth, email, password)
-      .then((result: any) => {
-        console.log(result);
-      })
-      .catch((error: any) => {
-        console.log(error);
+  getUser() {
+    return this.auth.currentUser;
+  }
+
+  async register(email: string, password: string) {
+    try {
+      const result = await createUserWithEmailAndPassword(
+        this.auth,
+        email,
+        password
+      ).then((result) => {
+        return result.user.uid;
       });
+
+      return result;
+    } catch (error) {
+      return null;
+    }
   }
   login(email: string, password: string) {
     try {
-      console.log(
-        'el login es ' + signInWithEmailAndPassword(this.auth, email, password)
-      );
+      signInWithEmailAndPassword(this.auth, email, password);
     } catch (error) {
-      console.log(error);
+      console.log('Error: ', error);
     }
   }
-
-  //TODO continuar aquí
 }

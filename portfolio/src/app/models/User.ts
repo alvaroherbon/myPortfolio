@@ -1,5 +1,5 @@
 export default interface User {
-  id: String;
+  id: any;
   name: String;
   lastName: String;
   email: String;
