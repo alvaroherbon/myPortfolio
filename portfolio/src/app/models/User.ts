@@ -5,4 +5,6 @@ export default interface User {
   name: String;
   lastName: String;
   email: String | null | undefined;
+  contacts: string[];
+  chats: string[];
 }

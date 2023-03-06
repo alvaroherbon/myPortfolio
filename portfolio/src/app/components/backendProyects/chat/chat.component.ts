@@ -3,7 +3,14 @@ import User from 'src/app/models/User';
 import Chat from 'src/app/models/Chat';
 import { ChatService } from 'src/app/services/chat.service';
 import { AuthService } from '../../../services/auth.service';
-import { Database, set, ref, update, onValue } from '@angular/fire/database';
+import {
+  Database,
+  set,
+  ref,
+  update,
+  onValue,
+  get,
+} from '@angular/fire/database';
 import Message from 'src/app/models/Message';
 import { FormControl, FormGroup } from '@angular/forms';
 import { uuidv4 } from '@firebase/util';
@@ -33,40 +40,52 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUser();
-    const admin: User = {
-      id: '1',
-      name: 'admin',
-      lastName: 'admin',
-      email: '',
-    };
-
-    const welcomMessage: Message = {
-      id: uuidv4(),
-      message:
-        'Welcome to your chat. Select a contact to start a conversation.',
-      timestamp: new Date(),
-      sender: admin,
-    };
-
-    this.messages = [welcomMessage];
+    this.getUserData();
   }
 
-  getUser() {
+  getUserData() {
+    this.getUser();
+  }
+
+  async getUser() {
     const uid = this.authService.getUser()?.uid;
-    console.log('la uid es ', uid);
-    const starCountRef = ref(this.database, 'usersChatData/' + uid);
+    console.log('user uid', uid);
+    const starCountRef = ref(this.database, '/users/' + uid);
     onValue(starCountRef, (snapshot) => {
-      this.user = snapshot.val().user;
-      this.chats = snapshot.val().chats;
-      this.contacts = snapshot.val().contacts;
+      this.user = snapshot.val();
+      this.getChats();
+    });
+  }
+
+  getChats() {
+    const uids = this.user.chats;
+    console.log('chats uids', uids);
+    this.chats = [];
+    uids.forEach((uid) => {
+      const starCountRef = ref(this.database, '/chats/' + uid);
+      onValue(starCountRef, (snapshot) => {
+        this.chats.push(snapshot.val());
+        this.getContacts();
+      });
+    });
+  }
+
+  getContacts() {
+    const uids = this.user.contacts;
+    console.log('contacts uids', uids);
+    this.contacts = [];
+    uids.forEach((uid) => {
+      const starCountRef = ref(this.database, '/users/' + uid);
+      onValue(starCountRef, (snapshot) => {
+        this.contacts.push(snapshot.val().user);
+      });
     });
   }
 
   selectChat(chat: Chat) {
     this.selectedChat = chat;
     console.log('selected chat is ', chat.messages);
-    this.messages = chat.messages;
+    this.messages = this.chatService.getMessages(chat.id);
   }
 
   sendMessage() {
@@ -74,9 +93,21 @@ export class ChatComponent implements OnInit {
       id: uuidv4(),
       message: this.sendForm.value.messageToSend,
       timestamp: new Date().toLocaleDateString(),
-      sender: this.user,
+      sender: this.user.id,
     };
-    this.selectedChat.messages.push(message);
     this.chatService.sendMessage(this.user.id, this.selectedChat, message);
+  }
+  getOtherUserName(chat: Chat) {
+    const userId = chat.users.find((user) => user !== this.user.id);
+    const user = get(ref(this.database, '/users/' + userId)).then(
+      (snapshot) => {
+        if (snapshot.exists()) {
+          return snapshot.val().name;
+        } else {
+          return null; // or undefined
+        }
+      }
+    );
+    return user;
   }
 }

@@ -4,6 +4,6 @@ import User from './User';
 export default interface Chat {
   id: any;
   timestamp: any;
-  messages: Message[];
-  otherUser: User;
+  messages: string[];
+  users: string[];
 }

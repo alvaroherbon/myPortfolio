@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import Chat from 'src/app/models/Chat';
 import Message from 'src/app/models/Message';
-import UserChatData from 'src/app/models/UserChatData';
 import { uuidv4 } from '@firebase/util';
 
 @Component({
@@ -43,38 +42,16 @@ export class RegisterPageComponent implements OnInit {
           icon: 'success',
           confirmButtonText: 'Ok',
         });
-
-        const admin: User = {
-          id: '1',
-          name: 'Admin',
-          lastName: 'Admin',
-          email: '',
-        };
-        const welcomeMessage: Message = {
-          id: uuidv4(),
-          timestamp: new Date().getTime(),
-          message: 'Welcome to the chat',
-          sender: admin,
-        };
-        const welcomeChat: Chat = {
-          id: uuidv4(),
-          timestamp: new Date().getTime(),
-          messages: [welcomeMessage],
-          otherUser: admin,
-        };
         const user: User = {
           id: res.user.uid,
           name: this.registerForm.value.name,
           lastName: this.registerForm.value.lastName,
           email: this.registerForm.value.email,
+          contacts: ['1'],
+          chats: [],
         };
 
-        const userChatData: UserChatData = {
-          chats: [welcomeChat],
-          contacts: [admin],
-          user: user,
-        };
-        this.chatService.registerUser(userChatData, user.id);
+        this.chatService.registerUser(user, user.id);
         this.router.navigateByUrl('/backend/login');
       })
       .catch((error) => {

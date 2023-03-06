@@ -4,5 +4,5 @@ export default interface Message {
   id: any;
   timestamp: any;
   message: String;
-  sender: User;
+  sender: String; //User uid
 }

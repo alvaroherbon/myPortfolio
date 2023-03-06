@@ -7,10 +7,10 @@
             <div class="col-8"></div>
         </div>
         <h5>Contacts</h5>
-        <ul *ngFor="let chat of chats">
+        <ul *ngFor="let chat of chats ">
             <li class="list-group-item">
                 <button class="btn btn-link" (click)="selectChat(chat)">
-                    <h5>{{chat.otherUser.name}}</h5>
+                    <h5>{{chat.id}}</h5>
                 </button>
             </li>
         </ul>
@@ -18,7 +18,7 @@
 
     <div class="container col-8 m-1" id="chatPannel">
         <div class="container" *ngFor="let message of messages">
-            <h4>{{message.sender.name}}</h4>
+            <h4>{{message.sender}}</h4>
             <p>{{message.message}}</p>
             <span class="time-right">{{message.timestamp}}</span>
         </div>
