@@ -6,6 +6,7 @@ import { AuthService } from '../../../services/auth.service';
 import { Database, set, ref, update, onValue } from '@angular/fire/database';
 import Message from 'src/app/models/Message';
 import { FormControl, FormGroup } from '@angular/forms';
+import { uuidv4 } from '@firebase/util';
 
 @Component({
   selector: 'app-chat',
@@ -13,8 +14,7 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./chat.component.css'],
 })
 export class ChatComponent implements OnInit {
-  userName: String;
-  userLastName: String;
+  user: User;
   chats: Chat[];
   contacts: User[];
   messages: Message[];
@@ -39,10 +39,10 @@ export class ChatComponent implements OnInit {
       name: 'admin',
       lastName: 'admin',
       email: '',
-      chats: [],
     };
 
     const welcomMessage: Message = {
+      id: uuidv4(),
       message:
         'Welcome to your chat. Select a contact to start a conversation.',
       timestamp: new Date(),
@@ -55,11 +55,11 @@ export class ChatComponent implements OnInit {
   getUser() {
     const uid = this.authService.getUser()?.uid;
     console.log('la uid es ', uid);
-    const starCountRef = ref(this.database, 'users/' + uid);
+    const starCountRef = ref(this.database, 'usersChatData/' + uid);
     onValue(starCountRef, (snapshot) => {
-      this.userName = snapshot.val().name;
-      this.userLastName = snapshot.val().lastName;
+      this.user = snapshot.val().user;
       this.chats = snapshot.val().chats;
+      this.contacts = snapshot.val().contacts;
     });
   }
 
@@ -70,17 +70,13 @@ export class ChatComponent implements OnInit {
   }
 
   sendMessage() {
-    this.sendForm.value.messageToSend;
-    this.selectedChat.messages.push({
+    const message: Message = {
+      id: uuidv4(),
       message: this.sendForm.value.messageToSend,
-      timestamp: new Date(),
-      sender: {
-        id: this.authService.getUser()?.uid,
-        name: this.userName,
-        lastName: this.userLastName,
-        email: this.authService.getUser()?.email,
-        chats: this.chats,
-      },
-    });
+      timestamp: new Date().toLocaleDateString(),
+      sender: this.user,
+    };
+    this.selectedChat.messages.push(message);
+    this.chatService.sendMessage(this.user.id, this.selectedChat, message);
   }
 }

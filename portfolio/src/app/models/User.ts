@@ -5,5 +5,4 @@ export default interface User {
   name: String;
   lastName: String;
   email: String | null | undefined;
-  chats: Chat[];
 }
