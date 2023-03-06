@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import Chat from 'src/app/models/Chat';
 import Message from 'src/app/models/Message';
 
 @Component({
@@ -40,10 +41,23 @@ export class RegisterPageComponent implements OnInit {
           icon: 'success',
           confirmButtonText: 'Ok',
         });
+
+        const admin: User = {
+          id: '1',
+          name: 'Admin',
+          lastName: 'Admin',
+          email: '',
+          chats: [],
+        };
         const welcomeMessage: Message = {
           timestamp: new Date().getTime(),
           message: 'Welcome to the chat',
-          sender: 'admin',
+          sender: admin,
+        };
+        const welcomeChat: Chat = {
+          timestamp: new Date().getTime(),
+          messages: [welcomeMessage],
+          otherUser: admin,
         };
 
         const user: User = {
@@ -51,7 +65,7 @@ export class RegisterPageComponent implements OnInit {
           name: this.registerForm.value.name,
           lastName: this.registerForm.value.lastName,
           email: this.registerForm.value.email,
-          messages: [welcomeMessage],
+          chats: [welcomeChat],
         };
         this.chatService.registerUser(user, user.id);
         this.router.navigateByUrl('/backend/login');

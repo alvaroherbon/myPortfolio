@@ -14,10 +14,7 @@ export class AuthService {
   constructor(private auth: Auth, private chatService: ChatService) {}
 
   getUser() {
-    const name: any = this.auth.currentUser?.email;
-    const id: any = this.auth.currentUser?.uid;
-    console.log('current user is ', this.auth.currentUser);
-    return this.chatService.getUserByName(name, id);
+    return this.auth.currentUser;
   }
 
   async register(email: string, password: string) {

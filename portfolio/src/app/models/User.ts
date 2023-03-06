@@ -1,9 +1,9 @@
-import Message from './Message';
+import Chat from './Chat';
 
 export default interface User {
   id: any;
   name: String;
   lastName: String;
-  email: String;
-  messages: Message[];
+  email: String | null | undefined;
+  chats: Chat[];
 }
