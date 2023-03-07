@@ -45,6 +45,7 @@ export class ChatService {
     };
 
     const chat: Chat = {
+      name: 'Welcome Chat',
       timestamp: new Date().toLocaleDateString(),
       id: uuidv4(),
       messages: [welcomeMessage.id],
@@ -64,10 +65,7 @@ export class ChatService {
 
   sendMessage(id: String, chat: Chat, message: Message) {
     set(
-      ref(
-        this.database,
-        'usersChatData/' + id + '/chats/' + chat.id + '/messages/' + message.id
-      ),
+      ref(this.database, 'ChatMessages/' + chat.id + '/messages/' + message.id),
       message
     );
   }

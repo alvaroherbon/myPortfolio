@@ -28,6 +28,7 @@ export class ChatComponent implements OnInit {
   messageToSend: String;
   sendForm: FormGroup;
   selectedChat: Chat;
+  chatUsers: User[];
 
   constructor(
     private authService: AuthService,
@@ -84,15 +85,35 @@ export class ChatComponent implements OnInit {
 
   selectChat(chat: Chat) {
     this.selectedChat = chat;
-    console.log('selected chat is ', chat.messages);
-    this.messages = this.chatService.getMessages(chat.id);
+    this.messages = [];
+    const startRefM = ref(
+      this.database,
+      '/ChatMessages/' + chat.id + '/messages'
+    );
+    onValue(startRefM, (snapshot) => {
+      this.messages = [];
+      snapshot.forEach((childSnapshot) => {
+        const message: Message = childSnapshot.val();
+        this.messages.push(message);
+      });
+    });
+    const usersIds = chat.users;
+    this.chatUsers = [];
+    usersIds.forEach((uid) => {
+      const starCountRef = ref(this.database, '/users/' + uid);
+      onValue(starCountRef, (snapshot) => {
+        this.chatUsers.push(snapshot.val());
+      });
+    });
+    console.log('los usuarios del chat son: ', this.chatUsers);
   }
 
   sendMessage() {
     const message: Message = {
       id: uuidv4(),
       message: this.sendForm.value.messageToSend,
-      timestamp: new Date().toLocaleDateString(),
+      timestamp:
+        new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString(),
       sender: this.user.id,
     };
     this.chatService.sendMessage(this.user.id, this.selectedChat, message);
