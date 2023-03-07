@@ -36,6 +36,7 @@ import { RegisterPageComponent } from './components/register-page/register-page.
 import { ChatComponent } from './components/backendProyects/chat/chat.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { ChatMessageComponent } from './components/chat-message/chat-message.component';
+import { ChatMessageListComponent } from './components/chat-message-list/chat-message-list.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { ChatMessageComponent } from './components/chat-message/chat-message.com
     ChatComponent,
     LoginPageComponent,
     ChatMessageComponent,
+    ChatMessageListComponent,
   ],
   imports: [
     BrowserModule,

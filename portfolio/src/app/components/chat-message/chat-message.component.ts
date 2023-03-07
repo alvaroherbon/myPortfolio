@@ -11,17 +11,17 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./chat-message.component.css'],
 })
 export class ChatMessageComponent implements OnInit {
-  @Input() message: Message;
+  @Input() messagesUser: { message: Message; user: User }[];
   user: User;
+  message: Message;
   constructor(
     private chatService: ChatService,
     private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.chatService.getUser(this.message.sender).then((user) => {
-      this.user = user;
-    });
+    this.user = this.messagesUser[0].user;
+    this.message = this.messagesUser[0].message;
   }
 
   getTimePosition(): string {
