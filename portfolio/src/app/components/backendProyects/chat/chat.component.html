@@ -18,9 +18,8 @@
 
     <div class="container col-8 m-1" id="chatPannel">
         <div class="container" *ngFor="let message of messages">
-            <h4>{{message.sender}}</h4>
-            <p>{{message.message}}</p>
-            <span class="time-right">{{message.timestamp}}</span>
+            <!-- TODO add list of chat messages -->
+            <app-chat-message [message]="message"></app-chat-message>
         </div>
         <div class="container d-flex flex-row justify-content-between">
             <form [formGroup]="sendForm" class="col">

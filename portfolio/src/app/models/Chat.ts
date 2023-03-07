@@ -5,6 +5,5 @@ export default interface Chat {
   name: string;
   id: any;
   timestamp: any;
-  messages: string[];
   users: string[];
 }

@@ -35,6 +35,7 @@ import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { ChatComponent } from './components/backendProyects/chat/chat.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
+import { ChatMessageComponent } from './components/chat-message/chat-message.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { LoginPageComponent } from './components/login-page/login-page.component
     RegisterPageComponent,
     ChatComponent,
     LoginPageComponent,
+    ChatMessageComponent,
   ],
   imports: [
     BrowserModule,

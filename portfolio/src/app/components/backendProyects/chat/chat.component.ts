@@ -10,6 +10,8 @@ import {
   update,
   onValue,
   get,
+  orderByChild,
+  query,
 } from '@angular/fire/database';
 import Message from 'src/app/models/Message';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -28,7 +30,6 @@ export class ChatComponent implements OnInit {
   messageToSend: String;
   sendForm: FormGroup;
   selectedChat: Chat;
-  chatUsers: User[];
 
   constructor(
     private authService: AuthService,
@@ -41,6 +42,7 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.chatService.createAdmin();
     this.getUserData();
   }
 
@@ -50,7 +52,7 @@ export class ChatComponent implements OnInit {
 
   async getUser() {
     const uid = this.authService.getUser()?.uid;
-    console.log('user uid', uid);
+
     const starCountRef = ref(this.database, '/users/' + uid);
     onValue(starCountRef, (snapshot) => {
       this.user = snapshot.val();
@@ -60,7 +62,6 @@ export class ChatComponent implements OnInit {
 
   getChats() {
     const uids = this.user.chats;
-    console.log('chats uids', uids);
     this.chats = [];
     uids.forEach((uid) => {
       const starCountRef = ref(this.database, '/chats/' + uid);
@@ -73,7 +74,6 @@ export class ChatComponent implements OnInit {
 
   getContacts() {
     const uids = this.user.contacts;
-    console.log('contacts uids', uids);
     this.contacts = [];
     uids.forEach((uid) => {
       const starCountRef = ref(this.database, '/users/' + uid);
@@ -86,9 +86,9 @@ export class ChatComponent implements OnInit {
   selectChat(chat: Chat) {
     this.selectedChat = chat;
     this.messages = [];
-    const startRefM = ref(
-      this.database,
-      '/ChatMessages/' + chat.id + '/messages'
+    const startRefM = query(
+      ref(this.database, '/ChatMessages/' + chat.id + '/messages'),
+      orderByChild('timestamp')
     );
     onValue(startRefM, (snapshot) => {
       this.messages = [];
@@ -97,15 +97,6 @@ export class ChatComponent implements OnInit {
         this.messages.push(message);
       });
     });
-    const usersIds = chat.users;
-    this.chatUsers = [];
-    usersIds.forEach((uid) => {
-      const starCountRef = ref(this.database, '/users/' + uid);
-      onValue(starCountRef, (snapshot) => {
-        this.chatUsers.push(snapshot.val());
-      });
-    });
-    console.log('los usuarios del chat son: ', this.chatUsers);
   }
 
   sendMessage() {
@@ -117,18 +108,5 @@ export class ChatComponent implements OnInit {
       sender: this.user.id,
     };
     this.chatService.sendMessage(this.user.id, this.selectedChat, message);
-  }
-  getOtherUserName(chat: Chat) {
-    const userId = chat.users.find((user) => user !== this.user.id);
-    const user = get(ref(this.database, '/users/' + userId)).then(
-      (snapshot) => {
-        if (snapshot.exists()) {
-          return snapshot.val().name;
-        } else {
-          return null; // or undefined
-        }
-      }
-    );
-    return user;
   }
 }

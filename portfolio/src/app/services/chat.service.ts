@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Database, set, ref, update, onValue } from '@angular/fire/database';
+import {
+  Database,
+  set,
+  ref,
+  update,
+  onValue,
+  get,
+} from '@angular/fire/database';
 import Chat from '../models/Chat';
 import Message from '../models/Message';
 import User from '../models/User';
@@ -48,7 +55,6 @@ export class ChatService {
       name: 'Welcome Chat',
       timestamp: new Date().toLocaleDateString(),
       id: uuidv4(),
-      messages: [welcomeMessage.id],
       users: [user.id, admin.id],
     };
     user.chats.push(chat.id);
@@ -68,5 +74,22 @@ export class ChatService {
       ref(this.database, 'ChatMessages/' + chat.id + '/messages/' + message.id),
       message
     );
+  }
+
+  createAdmin() {
+    const admin: User = {
+      id: '1',
+      name: 'admin',
+      lastName: 'admin',
+      email: '',
+      contacts: [],
+      chats: [],
+    };
+    set(ref(this.database, 'users/' + admin.id), admin);
+  }
+
+  async getUser(id: any): Promise<User> {
+    const user: User = (await get(ref(this.database, 'users/' + id))).val();
+    return user;
   }
 }
