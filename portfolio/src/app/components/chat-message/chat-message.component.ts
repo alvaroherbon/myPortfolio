@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./chat-message.component.css'],
 })
 export class ChatMessageComponent implements OnInit {
-  @Input() messagesUser: { message: Message; user: User }[];
+  @Input() messageUser: { message: Message; user: User };
   user: User;
   message: Message;
   constructor(
@@ -20,8 +20,11 @@ export class ChatMessageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.user = this.messagesUser[0].user;
-    this.message = this.messagesUser[0].message;
+    this.user = this.messageUser.user;
+    if (this.messageUser.user.id === this.authService.getUser()?.uid) {
+      this.user.name = 'You';
+    }
+    this.message = this.messageUser.message;
   }
 
   getTimePosition(): string {
@@ -29,6 +32,14 @@ export class ChatMessageComponent implements OnInit {
       return 'time-right';
     } else {
       return 'time-left';
+    }
+  }
+
+  customizeMessage(): string {
+    if (this.message.sender === this.authService.getUser()?.uid) {
+      return 'currentUser';
+    } else {
+      return 'otherUser';
     }
   }
 }
