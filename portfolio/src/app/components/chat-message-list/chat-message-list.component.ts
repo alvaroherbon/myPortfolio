@@ -52,4 +52,6 @@ export class ChatMessageListComponent implements OnInit {
       });
     });
   }
+
+  //TODO algo falla a la hora de pasar los mensajes al componente hijo
 }
