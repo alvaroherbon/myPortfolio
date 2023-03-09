@@ -108,5 +108,16 @@ export class ChatComponent implements OnInit {
       sender: this.user.id,
     };
     this.chatService.sendMessage(this.user.id, this.selectedChat, message);
+    this.sendForm.reset();
+  }
+
+  createNewChat() {
+    console.log('callilng create new chat');
+  }
+  addNewContact() {
+    console.log('callilng add new contact');
+  }
+  selectContact(user: User) {
+    console.log('callilng select contact');
   }
 }

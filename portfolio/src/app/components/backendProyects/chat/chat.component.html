@@ -7,6 +7,14 @@
             <div class="col-8"></div>
         </div>
         <h5>Contacts</h5>
+        <ul *ngFor="let contact of contacts ">
+            <li class="list-group-item">
+                <button class="btn btn-link" (click)="selectContact(contact)">
+                    <h5>{{contact.name}}</h5>
+                </button>
+            </li>
+        </ul>
+        <h5>Chats</h5>
         <ul *ngFor="let chat of chats ">
             <li class="list-group-item">
                 <button class="btn btn-link" (click)="selectChat(chat)">
@@ -14,9 +22,14 @@
                 </button>
             </li>
         </ul>
+        <div class="container d-flex flex-row">
+            <button class="btn btn-primary col" (click)="createNewChat()">Create New Chat</button>
+            <div class="col-3"></div>
+            <button class="btn btn-secondary col" (click)="addNewContact()">Add Contact</button>
+        </div>
     </div>
 
-    <div class="container col-8 m-1" id="chatPannel">
+    <div class="container col-8 m-1 overflow-auto" id="chatPannel">
         <app-chat-message-list [chat]="selectedChat" *ngIf="selectedChat != null"></app-chat-message-list>
         <div class="container d-flex flex-row justify-content-between">
             <form [formGroup]="sendForm" class="col">

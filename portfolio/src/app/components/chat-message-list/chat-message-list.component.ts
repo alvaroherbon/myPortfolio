@@ -29,6 +29,7 @@ export class ChatMessageListComponent implements OnInit {
 
   users: User[];
   ngOnInit(): void {
+    console.log('el chat en el chat message list es: ' + this.chat);
     this.getMessages();
   }
 
@@ -43,11 +44,13 @@ export class ChatMessageListComponent implements OnInit {
         const message: Message = childSnapshot.val();
         this.messages.push(message);
       });
+      console.log('los mensajes despues de la consulta son: ' + this.messages);
       this.createList();
     });
   }
 
   createList() {
+    this.messagesUser = [];
     this.messages.forEach((message) => {
       this.chatService.getUser(message.sender).then((user) => {
         this.messagesUser.push({ message: message, user: user });
