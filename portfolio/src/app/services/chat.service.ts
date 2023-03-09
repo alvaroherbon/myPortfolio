@@ -92,4 +92,22 @@ export class ChatService {
     const user: User = (await get(ref(this.database, 'users/' + id))).val();
     return user;
   }
+
+  async getAllContacts(): Promise<User[]> {
+    const users: User[] = new Array();
+    const starCountRef = ref(this.database, '/users/');
+    get(starCountRef).then((snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        const user: User = childSnapshot.val();
+        users.push(user);
+      });
+      console.log('los usuarios son: ' + users);
+    });
+    return users;
+  }
+
+  addNewContact(user: User, userToAdd: User) {
+    user.contacts.push(userToAdd.id);
+    update(ref(this.database, 'users/' + user.id), user);
+  }
 }

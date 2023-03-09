@@ -29,7 +29,10 @@ export class ChatComponent implements OnInit {
   messages: Message[];
   messageToSend: String;
   sendForm: FormGroup;
+  addContactForm: FormGroup;
   selectedChat: Chat;
+  usersList: User[];
+  searchContactList: User[];
 
   constructor(
     private authService: AuthService,
@@ -39,11 +42,15 @@ export class ChatComponent implements OnInit {
     this.sendForm = new FormGroup({
       messageToSend: new FormControl(''),
     });
+    this.addContactForm = new FormGroup({
+      contactToAdd: new FormControl(''),
+    });
   }
 
   ngOnInit(): void {
     this.chatService.createAdmin();
     this.getUserData();
+    this.getUsersList();
   }
 
   getUserData() {
@@ -78,7 +85,7 @@ export class ChatComponent implements OnInit {
     uids.forEach((uid) => {
       const starCountRef = ref(this.database, '/users/' + uid);
       onValue(starCountRef, (snapshot) => {
-        this.contacts.push(snapshot.val().user);
+        this.contacts.push(snapshot.val());
       });
     });
   }
@@ -114,10 +121,21 @@ export class ChatComponent implements OnInit {
   createNewChat() {
     console.log('callilng create new chat');
   }
-  addNewContact() {
-    console.log('callilng add new contact');
+  addNewContact(user: User) {
+    this.chatService.addNewContact(this.user, user);
   }
   selectContact(user: User) {
     console.log('callilng select contact');
+  }
+
+  async getUsersList() {
+    this.usersList = await this.chatService.getAllContacts();
+  }
+  async refreshSearchContactList() {
+    this.searchContactList = this.usersList.filter((user) =>
+      user.name
+        .toLowerCase()
+        .includes(this.addContactForm.value.contactToAdd.toLowerCase())
+    );
   }
 }

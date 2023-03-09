@@ -10,7 +10,7 @@
         <ul *ngFor="let contact of contacts ">
             <li class="list-group-item">
                 <button class="btn btn-link" (click)="selectContact(contact)">
-                    <h5>{{contact.name}}</h5>
+                    <p>{{contact.name}}</p>
                 </button>
             </li>
         </ul>
@@ -22,10 +22,12 @@
                 </button>
             </li>
         </ul>
-        <div class="container d-flex flex-row">
-            <button class="btn btn-primary col" (click)="createNewChat()">Create New Chat</button>
-            <div class="col-3"></div>
-            <button class="btn btn-secondary col" (click)="addNewContact()">Add Contact</button>
+        <div class="container d-flex flex-row justify-content-around">
+            <button class="btn btn-secondary col" (click)="createNewChat()">Create New Chat</button>
+            <div class="col-2"></div>
+            <button type="button" class="btn btn-primary col" data-bs-toggle="modal" data-bs-target="#addContactModal">
+                Add Contact
+            </button>
         </div>
     </div>
 
@@ -37,6 +39,37 @@
                     aria-describedby="basic-addon1" formControlName="messageToSend">
             </form>
             <button class="btn btn-primary col-1" (click)="sendMessage()">Send</button>
+        </div>
+    </div>
+
+
+    <!-- Modal add contact -->
+    <div class="modal fade" id="addContactModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Contact</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="addContactForm">
+                        <input type="text" class="form-control" placeholder="Search a contact" aria-label="Search"
+                            aria-describedby="basic-addon1" formControlName="contactToAdd"
+                            (input)="refreshSearchContactList()">
+                        <div class="list-group" *ngFor="let contact of searchContactList">
+                            <button type="button" class="list-group-item list-group-item-action" aria-current="true"
+                                (click)="addNewContact(contact)">
+                                {{contact.name}} - {{contact.lastName}}
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <!-- <button type="button" class="btn btn-primary" (click)="addNewContact()">Add</button> -->
+                </div>
+            </div>
         </div>
     </div>
 
