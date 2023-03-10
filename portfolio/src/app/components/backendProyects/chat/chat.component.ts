@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import User from 'src/app/models/User';
 import Chat from 'src/app/models/Chat';
 import { ChatService } from 'src/app/services/chat.service';
@@ -12,6 +12,7 @@ import {
   get,
   orderByChild,
   query,
+  child,
 } from '@angular/fire/database';
 import Message from 'src/app/models/Message';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -33,6 +34,9 @@ export class ChatComponent implements OnInit {
   selectedChat: Chat;
   usersList: User[];
   searchContactList: User[];
+  newChatForm: FormGroup;
+  newChatContactList: User[] = [];
+  newChat: Chat;
 
   constructor(
     private authService: AuthService,
@@ -45,6 +49,10 @@ export class ChatComponent implements OnInit {
     this.addContactForm = new FormGroup({
       contactToAdd: new FormControl(''),
     });
+    this.newChatForm = new FormGroup({
+      newChatName: new FormControl(''),
+      contactToAddToChat: new FormControl(''),
+    });
   }
 
   ngOnInit(): void {
@@ -55,6 +63,14 @@ export class ChatComponent implements OnInit {
 
   getUserData() {
     this.getUser();
+  }
+
+  getSelectedChat() {
+    return this.selectedChat;
+  }
+
+  setSelectedChat(chat: Chat) {
+    this.selectedChat = chat;
   }
 
   async getUser() {
@@ -74,36 +90,34 @@ export class ChatComponent implements OnInit {
       const starCountRef = ref(this.database, '/chats/' + uid);
       onValue(starCountRef, (snapshot) => {
         this.chats.push(snapshot.val());
-        this.getContacts();
       });
     });
+    this.getContacts();
   }
 
   getContacts() {
     const uids = this.user.contacts;
     this.contacts = [];
-    uids.forEach((uid) => {
-      const starCountRef = ref(this.database, '/users/' + uid);
-      onValue(starCountRef, (snapshot) => {
-        this.contacts.push(snapshot.val());
-      });
+    uids.forEach(async (uid) => {
+      const user: User = (await get(ref(this.database, 'users/' + uid))).val();
+      this.contacts.push(user);
     });
   }
 
   selectChat(chat: Chat) {
+    console.log('calling selectChat');
     this.selectedChat = chat;
-    this.messages = [];
-    const startRefM = query(
-      ref(this.database, '/ChatMessages/' + chat.id + '/messages'),
-      orderByChild('timestamp')
-    );
-    onValue(startRefM, (snapshot) => {
-      this.messages = [];
-      snapshot.forEach((childSnapshot) => {
-        const message: Message = childSnapshot.val();
-        this.messages.push(message);
-      });
-    });
+    // const startRefM = query(
+    //   ref(this.database, '/ChatMessages/' + chat.id + '/messages'),
+    //   orderByChild('timestamp')
+    // );
+    // onValue(startRefM, (snapshot) => {
+    //   this.messages = [];
+    //   snapshot.forEach((childSnapshot) => {
+    //     const message: Message = childSnapshot.val();
+    //     this.messages.push(message);
+    //   });
+    // });
   }
 
   sendMessage() {
@@ -119,10 +133,26 @@ export class ChatComponent implements OnInit {
   }
 
   createNewChat() {
-    console.log('callilng create new chat');
+    this.newChat = {
+      id: uuidv4(),
+      name: this.newChatForm.value.newChatName,
+      users: this.newChatContactList.map((user) => user.id),
+      timestamp: new Date().toLocaleDateString(),
+    };
+    this.newChat.users.push(this.user.id);
+    this.chatService.registerNewChat(this.newChat);
+    this.newChatForm.reset();
+    this.newChatContactList.forEach((user) => {
+      user.chats.push(this.newChat.id);
+      this.chatService.updateUser(user);
+    });
+    this.user.chats.push(this.newChat.id);
+    this.chatService.updateUser(this.user);
+    this.emptyNewChatContactList();
   }
   addNewContact(user: User) {
     this.chatService.addNewContact(this.user, user);
+    //this.getContacts();
   }
   selectContact(user: User) {
     console.log('callilng select contact');
@@ -137,5 +167,28 @@ export class ChatComponent implements OnInit {
         .toLowerCase()
         .includes(this.addContactForm.value.contactToAdd.toLowerCase())
     );
+  }
+  async refreshAddContactList() {
+    this.searchContactList = this.usersList.filter((user) =>
+      user.name
+        .toLowerCase()
+        .includes(this.newChatForm.value.contactToAddToChat.toLowerCase())
+    );
+  }
+  addNewContactToChat(user: User) {
+    console.log(this.newChatContactList.length);
+    this.newChatContactList.push(user);
+    this.searchContactList = this.usersList.filter(
+      (contact) => this.newChatContactList.indexOf(contact) === -1
+    );
+  }
+  removeContactFromChat(user: User) {
+    this.newChatContactList = this.newChatContactList.filter(
+      (contact) => contact.id !== user.id
+    );
+    this.searchContactList.push(user);
+  }
+  emptyNewChatContactList() {
+    this.newChatContactList = [];
   }
 }

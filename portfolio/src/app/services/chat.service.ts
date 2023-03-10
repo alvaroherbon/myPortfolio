@@ -33,6 +33,14 @@ export class ChatService {
     return messages;
   }
 
+  registerNewChat(chat: Chat) {
+    set(ref(this.database, 'chats/' + chat.id), chat);
+  }
+
+  updateUser(user: User) {
+    update(ref(this.database, 'users/' + user.id), user);
+  }
+
   registerUser(user: User, id: String | null) {
     const admin: User = {
       id: '1',

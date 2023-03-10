@@ -13,6 +13,7 @@ import {
   orderByChild,
   query,
 } from '@angular/fire/database';
+import { orderByValue } from 'firebase/database';
 
 @Component({
   selector: 'app-chat-message-list',
@@ -20,8 +21,18 @@ import {
   styleUrls: ['./chat-message-list.component.css'],
 })
 export class ChatMessageListComponent implements OnInit {
-  @Input() chat: Chat;
+  thisChat: Chat;
+
+  @Input()
+  set chat(value: Chat) {
+    this.thisChat = value;
+    this.getMessages();
+  }
   messages: Message[];
+
+  getChat() {
+    return this.chat;
+  }
 
   constructor(private chatService: ChatService, private database: Database) {}
 
@@ -29,13 +40,13 @@ export class ChatMessageListComponent implements OnInit {
 
   users: User[];
   ngOnInit(): void {
-    console.log('el chat en el chat message list es: ' + this.chat);
     this.getMessages();
   }
 
   async getMessages() {
+    this.messages = [];
     const startRefM = query(
-      ref(this.database, 'ChatMessages/' + this.chat.id + '/messages'),
+      ref(this.database, 'ChatMessages/' + this.thisChat.id + '/messages'),
       orderByChild('timestamp')
     );
     onValue(startRefM, (snapshot) => {

@@ -23,7 +23,9 @@
             </li>
         </ul>
         <div class="container d-flex flex-row justify-content-around">
-            <button class="btn btn-secondary col" (click)="createNewChat()">Create New Chat</button>
+            <button type="button" class="btn btn-secondary col" data-bs-toggle="modal" data-bs-target="#newChatModal">
+                Create New Chat
+            </button>
             <div class="col-2"></div>
             <button type="button" class="btn btn-primary col" data-bs-toggle="modal" data-bs-target="#addContactModal">
                 Add Contact
@@ -72,5 +74,54 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal new chat -->
+    <div class="modal fade" id="newChatModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Contact</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        (click)="emptyNewChatContactList()"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="newChatForm">
+                        <label for="newChatName">Name of the chat</label>
+                        <input type="text" class="form-control mb-2" placeholder="Insert a Name" aria-label="Search"
+                            aria-describedby="basic-addon1" formControlName="newChatName">
+                        <label for="contactToAddToChat">Chat Members</label>
+                        <input type="text" class="form-control" placeholder="Search a contact to add to the chat"
+                            aria-label="Search" aria-describedby="basic-addon1" formControlName="contactToAddToChat"
+                            (input)="refreshAddContactList()">
+                        <div class="d-flex flex-row mt-2">
+                            <div class="list-group col">
+                                <label for="searchContactList">Search Results</label>
+                                <button type="button" class="list-group-item list-group-item-action" aria-current="true"
+                                    (click)="addNewContactToChat(contact)" *ngFor="let contact of searchContactList">
+                                    {{contact.name}} - {{contact.lastName}}
+                                </button>
+                            </div>
+                            <div class="col-1"></div>
+                            <div class="list-group col">
+                                <label for="newChatContactList">Chat Members</label>
+                                <button type="button" class="list-group-item list-group-item-action" aria-current="true"
+                                    (click)="removeContactFromChat(contact)" *ngFor="let contact of newChatContactList">
+                                    {{contact.name}} - {{contact.lastName}}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        (click)="emptyNewChatContactList()">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="createNewChat()"
+                        data-bs-dismiss="modal">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </div>
