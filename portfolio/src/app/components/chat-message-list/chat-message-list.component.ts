@@ -52,13 +52,15 @@ export class ChatMessageListComponent implements OnInit {
       snapshot.forEach((childSnapshot) => {
         const message: Message = childSnapshot.val();
         this.messages.push(message);
-        console.log('el tamaño de ls mensajes es: ' + this.messages.length);
       });
       this.createList();
     });
   }
 
   createList() {
+    console.log(
+      'al llamar a create list, los messages son' + this.messages.length
+    );
     this.messagesUser = [];
     this.messages.forEach((message) => {
       this.chatService.getUser(message.sender).then((user) => {
