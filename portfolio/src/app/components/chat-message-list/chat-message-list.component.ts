@@ -25,6 +25,7 @@ export class ChatMessageListComponent implements OnInit {
 
   @Input()
   set chat(value: Chat) {
+    this.messages = [];
     this.thisChat = value;
     this.getMessages();
   }
@@ -39,12 +40,9 @@ export class ChatMessageListComponent implements OnInit {
   messagesUser: { message: Message; user: User }[] = [];
 
   users: User[];
-  ngOnInit(): void {
-    this.getMessages();
-  }
+  ngOnInit(): void {}
 
   async getMessages() {
-    this.messages = [];
     const startRefM = query(
       ref(this.database, 'ChatMessages/' + this.thisChat.id + '/messages'),
       orderByChild('timestamp')
@@ -54,8 +52,8 @@ export class ChatMessageListComponent implements OnInit {
       snapshot.forEach((childSnapshot) => {
         const message: Message = childSnapshot.val();
         this.messages.push(message);
+        console.log('el tamaño de ls mensajes es: ' + this.messages.length);
       });
-      console.log('los mensajes despues de la consulta son: ' + this.messages);
       this.createList();
     });
   }
@@ -65,6 +63,7 @@ export class ChatMessageListComponent implements OnInit {
     this.messages.forEach((message) => {
       this.chatService.getUser(message.sender).then((user) => {
         this.messagesUser.push({ message: message, user: user });
+        console.log('el tamaño de messageUesr es ' + this.messagesUser.length);
       });
     });
   }

@@ -58,9 +58,9 @@
                         <input type="text" class="form-control" placeholder="Search a contact" aria-label="Search"
                             aria-describedby="basic-addon1" formControlName="contactToAdd"
                             (input)="refreshSearchContactList()">
-                        <div class="list-group" *ngFor="let contact of searchContactList">
+                        <div class="list-group m-2">
                             <button type="button" class="list-group-item list-group-item-action" aria-current="true"
-                                (click)="addNewContact(contact)">
+                                (click)="addNewContact(contact)" *ngFor="let contact of searchContactList">
                                 {{contact.name}} - {{contact.lastName}}
                             </button>
                         </div>

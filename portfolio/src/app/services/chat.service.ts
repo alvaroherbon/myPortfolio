@@ -109,7 +109,6 @@ export class ChatService {
         const user: User = childSnapshot.val();
         users.push(user);
       });
-      console.log('los usuarios son: ' + users);
     });
     return users;
   }

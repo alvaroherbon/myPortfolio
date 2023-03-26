@@ -58,11 +58,10 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     this.chatService.createAdmin();
     this.getUserData();
-    this.getUsersList();
   }
 
-  getUserData() {
-    this.getUser();
+  async getUserData() {
+    await this.getUser();
   }
 
   getSelectedChat() {
@@ -75,10 +74,10 @@ export class ChatComponent implements OnInit {
 
   async getUser() {
     const uid = this.authService.getUser()?.uid;
-
     const starCountRef = ref(this.database, '/users/' + uid);
     onValue(starCountRef, (snapshot) => {
       this.user = snapshot.val();
+      this.getUsersList();
       this.getChats();
     });
   }
@@ -159,27 +158,34 @@ export class ChatComponent implements OnInit {
   }
 
   async getUsersList() {
-    this.usersList = await this.chatService.getAllContacts();
+    await this.chatService.getAllContacts().then((users) => {
+      this.usersList = users;
+    });
   }
   async refreshSearchContactList() {
-    this.searchContactList = this.usersList.filter((user) =>
-      user.name
-        .toLowerCase()
-        .includes(this.addContactForm.value.contactToAdd.toLowerCase())
+    this.searchContactList = this.usersList.filter(
+      (user) =>
+        user.name
+          .toLowerCase()
+          .includes(this.addContactForm.value.contactToAdd.toLowerCase()) &&
+        this.user.id !== user.id
     );
   }
   async refreshAddContactList() {
-    this.searchContactList = this.usersList.filter((user) =>
-      user.name
-        .toLowerCase()
-        .includes(this.newChatForm.value.contactToAddToChat.toLowerCase())
+    this.searchContactList = this.usersList.filter(
+      (user) =>
+        user.name
+          .toLowerCase()
+          .includes(this.newChatForm.value.contactToAddToChat.toLowerCase()) &&
+        this.user.id !== user.id
     );
   }
   addNewContactToChat(user: User) {
-    console.log(this.newChatContactList.length);
     this.newChatContactList.push(user);
     this.searchContactList = this.usersList.filter(
-      (contact) => this.newChatContactList.indexOf(contact) === -1
+      (contact) =>
+        this.newChatContactList.indexOf(contact) === -1 &&
+        contact.id !== this.user.id
     );
   }
   removeContactFromChat(user: User) {
