@@ -1,7 +1,18 @@
-<div class="container-fluid">
+
+<mat-tab-group animationDuration="0ms">
+  <mat-tab label="About Myself">
+
+<app-my-picture></app-my-picture>
+  </mat-tab>
+  <mat-tab label="Field News">
+    <div class="container-fluid">
     <div class="container-fluid text-center mt-4">
         <h2> Software field news</h2>
         <hr class="border border-2 opacity-100">
     </div>
     <app-news-card-list></app-news-card-list>
 </div>
+</mat-tab>
+  <mat-tab label="Third">Content 3</mat-tab>
+  <mat-tab label="Fourth">Content 3</mat-tab>
+</mat-tab-group>

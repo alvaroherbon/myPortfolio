@@ -37,6 +37,9 @@ import { ChatComponent } from './components/backendProyects/chat/chat.component'
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { ChatMessageComponent } from './components/chat-message/chat-message.component';
 import { ChatMessageListComponent } from './components/chat-message-list/chat-message-list.component';
+import { MyPictureComponent } from './components/my-picture/my-picture.component';
+import {MatTabsModule} from '@angular/material/tabs';
+
 
 @NgModule({
   declarations: [
@@ -62,6 +65,7 @@ import { ChatMessageListComponent } from './components/chat-message-list/chat-me
     LoginPageComponent,
     ChatMessageComponent,
     ChatMessageListComponent,
+    MyPictureComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +75,7 @@ import { ChatMessageListComponent } from './components/chat-message-list/chat-me
     MatGridListModule,
     MatCardModule,
     MatToolbarModule,
+    MatTabsModule,
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
